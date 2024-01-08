@@ -1,0 +1,8 @@
+{
+    "name": "Csnetmanager integration",
+    "filename": "csnetmanager_integration.zip",
+    "hide_default_branch": true,
+    "homeassistant": "2023.12.0",
+    "render_readme": false,
+    "zip_release": false
+}
