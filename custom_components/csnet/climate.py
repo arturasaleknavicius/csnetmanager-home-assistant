@@ -62,6 +62,7 @@ class Climate(CoordinatorEntity, ClimateEntity):  # noqa: D101
         self._attr_hvac_modes = [HVACMode.OFF, HVACMode.HEAT]
         self._attr_hvac_mode = HVACMode.OFF
         self._attr_supported_features = 1
+        self._attr_target_temperature = 25.0
 
     async def async_set_hvac_mode(self, hvac_mode: HVACMode):
         if hvac_mode == HVACMode.OFF:
@@ -93,7 +94,4 @@ class Climate(CoordinatorEntity, ClimateEntity):  # noqa: D101
             if self.coordinator.data[self.idx]["onOff"] == 0
             else HVACMode.HEAT
         )
-        self._attr_target_temperature = self.coordinator.data[self.idx][
-            "settingTemperature"
-        ]
         self.async_write_ha_state()
