@@ -1,0 +1,15 @@
+{
+  "domain": "csnet",
+  "name": "csnet",
+  "codeowners": [
+    "@kroshilin"
+  ],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://www.home-assistant.io/integrations/csnet",
+  "homekit": {},
+  "iot_class": "cloud_polling",
+  "requirements": [],
+  "ssdp": [],
+  "zeroconf": []
+}
