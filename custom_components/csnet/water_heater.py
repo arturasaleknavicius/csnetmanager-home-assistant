@@ -85,7 +85,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
         zone_name = element.get("zone_name", "")
 
         # Check if the element is a water heater
-        if mode_icon == "ic_dhw.svg" or "unitCard" in class_name or "Hot Water" in zone_name:
+        if "Hot Water" in zone_name:
             entity = WaterHeater(
                 coordinator,
                 ELEMENT_PREFIX + str(key),  # Use the key as the unique identifier
