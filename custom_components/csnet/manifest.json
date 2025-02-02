@@ -1,9 +1,7 @@
 {
   "domain": "csnet",
   "name": "Csnet",
-  "codeowners": [
-    "@kroshilin"
-  ],
+  "codeowners": ["@kroshilin"],
   "config_flow": true,
   "dependencies": [],
   "documentation": "https://www.home-assistant.io/integrations/csnet",
