@@ -171,7 +171,8 @@ class CSnetHub:
                 if on is not None:
                     data["runStopDHW"] = on  # 1 for on, 0 for off
                 if temp is not None:
-                    data["settingTempDHW"] = temp  # Always send the target temperature
+#                    data["settingTempDHW"] = temp  # Always send the target temperature
+                    await self.set_water_heater_temperature(parentId, temp)  # Set water heater temperature
                 _LOGGER.debug(f"Sending toggle command with data: {data}")
             else:
                 # Air heater control
@@ -303,11 +304,16 @@ class CSnetHub:
     async def _is_water_heater(self, room):
         """Determine if the given room is a water heater."""
         element = await self._get_element_data(room)
-        return (
-            element.get("mode_icon") == "ic_dhw.svg"
-            or "unitCard" in element.get("class_name", "")
-            or "Hot Water" in element.get("zone_name", "")
-        )
+        if not element:
+            return False  # If no element data is found, assume it's not a water heater
+
+        # Check if the zone_name contains "Hot Water"
+        return "Hot Water" in element.get("zone_name", "")
+#        return (
+#            element.get("mode_icon") == "ic_dhw.svg"
+#            or "unitCard" in element.get("class_name", "")
+#            or "Hot Water" in element.get("zone_name", "")
+#        )
         _LOGGER.debug(f"Checking if room {room} is a water heater: {element}")
 
     def _get_zone_name(self, element_type):
