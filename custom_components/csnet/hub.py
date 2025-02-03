@@ -240,7 +240,7 @@ class CSnetHub:
         except Exception as e:
             _LOGGER.error(f"Error sending water heater on/off command: {e}")
 
-    async def set_water_heater_temperature(self, parentId, temp) -> None:
+    async def set_water_heater_temperature(self, parentId, temp, on) -> None:
         """Set the target temperature of the water heater."""
         await self.auth()  # Ensure authentication is done first
 
@@ -257,7 +257,8 @@ class CSnetHub:
                 "orderStatus": "PENDING",
                 "indoorId": parentId,
                 "_csrf": self.xsrf,
-                "settingTempDHW": temp,  # Target temperature
+                "runStopDHW": on,  # Include the current state (1 for on, 0 for off)
+                "settingTempDHW": int(temp),  # Target temperature
             }
 
             _LOGGER.debug(f"Sending water heater temperature command with data: {data}")
