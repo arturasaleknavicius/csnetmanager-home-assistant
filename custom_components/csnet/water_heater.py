@@ -58,8 +58,11 @@ class WaterHeater(CoordinatorEntity, WaterHeaterEntity):
             temperature = kwargs.get("temperature")
             if temperature is not None:
                 self._attr_target_temperature = temperature
+                self._attr_current_operation = "heat" if self._attr_current_operation == "heat" else "off"
                 self.async_write_ha_state()
-                await self.hub.set_water_heater_temperature(self._parentId, temperature)
+                await self.hub.set_water_heater_temperature(
+                    self._parentId, temperature,  1 if self._attr_current_operation == "heat" else 0
+                )
         except Exception as e:
             _LOGGER.error(f"Error setting temperature: {e}")
 
