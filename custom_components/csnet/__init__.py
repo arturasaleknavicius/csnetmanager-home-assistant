@@ -10,7 +10,7 @@ from .hub import CSnetHub
 
 _LOGGER = logging.getLogger(__name__)
 
-PLATFORMS: list[Platform] = [Platform.CLIMATE, Platform.WATER_HEATER]
+PLATFORMS: list[Platform] = [Platform.CLIMATE, Platform.WATER_HEATER, Platform.SENSOR]  # Add Platform.SENSOR
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up csnet from a config entry."""
@@ -22,9 +22,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     _LOGGER.debug("Coordinator created. Refreshing data for the first time.")
     await coordinator.async_config_entry_first_refresh()
 
-    hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
+    hass.data[DOMAIN][entry.entry_id] = coordinator
     _LOGGER.debug("Coordinator stored in hass.data.")
 
+    # Forward setup for all platforms
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     _LOGGER.debug("Platforms forwarded.")
 
@@ -41,6 +42,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             await coordinator.hub.close()  # Close the session
         hass.data[DOMAIN].pop(entry.entry_id)
         _LOGGER.debug("Coordinator removed from hass.data.")
+
     # Unload all platforms
     unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
