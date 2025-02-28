@@ -25,7 +25,7 @@ class Climate(CoordinatorEntity, ClimateEntity):
         self._attr_hvac_modes = [HVACMode.OFF, HVACMode.HEAT]  # Valid HVAC modes
         self._attr_hvac_mode = HVACMode.OFF  # Default HVAC mode
         self._attr_supported_features = ClimateEntityFeature.TARGET_TEMPERATURE
-        self._attr_target_temperature = 25.0
+        self._attr_target_temperature = 22.0
 
     async def async_set_hvac_mode(self, hvac_mode: HVACMode) -> None:
         """Set the HVAC mode."""
