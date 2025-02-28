@@ -110,6 +110,7 @@ class CSnetHub:
             try:
                 data = json.loads(text)
                 _LOGGER.debug(f"Parsed data: {data}")
+                self.last_full_data = data["data"]  # Full API response for sensors
 
                 # Add mode_icon, class_name, and zone_name to each element
                 for element in data["data"]["elements"]:
